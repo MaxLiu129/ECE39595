@@ -1,0 +1,20 @@
+//
+//  Teleport.hpp
+//  The dungeon
+//
+//  Created by zihan liu on 10/10/20.
+//  Copyright © 2020 zihan liu. All rights reserved.
+//
+
+#ifndef Teleport_hpp
+#define Teleport_hpp
+
+#include <stdio.h>
+#include "CreatureAction.hpp"
+class Teleport: public CreatureAction {
+public:
+    Teleport(std::string _name, Creature _owner);
+    std::string name;
+    Creature owner;
+};
+#endif /* Teleport_hpp */
