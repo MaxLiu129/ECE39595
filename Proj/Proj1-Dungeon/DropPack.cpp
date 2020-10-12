@@ -9,7 +9,7 @@
 #include "DropPack.hpp"
 #include <iostream>
 
-DropPack::DropPack(std::string _name, Creature* owner): CreatureAction(*owner) {
+DropPack::DropPack(std::string _name, Creature* owner): CreatureAction(owner) {
     name = _name;
     std::cout << "DropPack" << std::endl;
 }

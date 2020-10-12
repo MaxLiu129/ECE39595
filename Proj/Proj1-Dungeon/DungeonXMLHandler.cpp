@@ -41,6 +41,14 @@ DungeonXMLHandler::DungeonXMLHandler() {
 
 }
 
+void DungeonXMLHandler::characters(const XMLCh* const ch, const XMLSize_t length) {
+    data = xmlChToString(ch, (int)length);
+    if (DEBUG > 1) {
+        std::cout << CLASSID + ".characters: " << data << std::endl;
+        std::cout.flush();
+    }
+}
+
 void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName, const xercesc::Attributes& attributes){
 
         char * qNameStr = xercesc::XMLString::transcode(qName);
@@ -51,7 +59,7 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
             // dungeonBeingparsed = new Dungoen();      //dbp = Dungeon Being Parsed
             // odgBeingParsed = new ObjectDisplayGrid();   //obp = odg Being Parsed
 
-            std::string name = xmlChToString(getXMLChAttributeFromString(attributes,"name"));;
+            std::string name = xmlChToString(getXMLChAttributeFromString(attributes,"name"));
             int width = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"width")));
             int gameHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"gameHeight")));
             int topHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"topHeight")));
@@ -64,9 +72,8 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
         else if(case_insensitive_match(qNameStr, "Rooms")){}
         else if(case_insensitive_match(qNameStr, "Room")){
             int id = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
-            Room* room;
+            //roomBeingParsed = new Room();
             roomBeingParsed->setId(id);
-            dungeonBeingparsed->addRoom(room);
 
             displayType = "ROOM";
         }
@@ -82,8 +89,8 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
         else if(case_insensitive_match(qNameStr, "Monster")){
             monsterBeingParsed = new Monster();
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
-            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
-            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            int room = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
+            int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
             monsterBeingParsed->setID(room, serial);
             monsterBeingParsed->setName(name);
             displayType = "MONSTER";
@@ -100,24 +107,24 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
         }
         else if(case_insensitive_match(qNameStr, "Scroll")){
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
-            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
-            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            int room = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
+            int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
             scrollBeingParsed = new Scroll(name);
             scrollBeingParsed->setID(room, serial);
             displayType = "SCROLL";
         }
         else if(case_insensitive_match(qNameStr, "Sword")){
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
-            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
-            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
-            swordBeingParsed = new Sword();
+            int room = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
+            int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
+            swordBeingParsed = new Sword(name);
             swordBeingParsed->setID(room, serial);
             displayType = "SWORD";
         }
         else if(case_insensitive_match(qNameStr, "Armor")){
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
-            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
-            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            int room = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
+            int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
             armorBeingParsed = new Armor();
             armorBeingParsed->setID(room, serial);
             displayType = "ARMOR";

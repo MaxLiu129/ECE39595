@@ -14,7 +14,7 @@
 
 class Sword: public Item {
 public:
-    Sword();
+    Sword(std::string _name);
     void setID(int _room, int _serial);
 private:
     std::string name;

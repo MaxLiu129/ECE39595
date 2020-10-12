@@ -9,7 +9,7 @@
 #include "EndGame.hpp"
 #include <iostream>
 
-EndGame::EndGame(std::string _name, Creature* owner):CreatureAction(Creature* owner) {
+EndGame::EndGame(std::string _name, Creature* owner):CreatureAction(owner) {
     name = _name;
     std::cout << "End game with name" + _name << std::endl;
 }

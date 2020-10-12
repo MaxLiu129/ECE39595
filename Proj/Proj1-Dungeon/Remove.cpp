@@ -9,7 +9,7 @@
 #include "Remove.hpp"
 #include <iostream>
 
-Remove::Remove(std::string _name, Creature* owner):CreatureAction(Creature *owner) {
+Remove::Remove(std::string _name, Creature* owner):CreatureAction(owner) {
     name = _name;
     std::cout << "Removed name" + _name << std::endl;
 }

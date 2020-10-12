@@ -48,7 +48,7 @@ class DungeonXMLHandler : public xercesc::DefaultHandler{
         std::string data ;
 
         /*DisplayType displayType;*/
-        std::string displayType = NULL;
+        std::string displayType;
         //const DisplayType ROOM;
         //const DisplayType PASSAGE;
         //const DisplayType MONSTER;

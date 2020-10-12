@@ -11,7 +11,8 @@ void Room::setId(int _room){
     std::cout << "Room::setId(int _room) called" << std::endl;
 }
 
-void setCreature(Creature* _monster){
+
+void Room::setCreature(Creature* _monster){
     //creatures[creatureCount++] = _monster;
     std::cout << "setCreature(Creature Monster) called." << std::endl;
 }   

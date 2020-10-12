@@ -9,7 +9,7 @@
 #include "UpdateDisplay.hpp"
 #include <iostream>
 
-UpdateDisplay::UpdateDisplay(std::string _name, Creature* owner):CreatureAction(Creature **owner) {
+UpdateDisplay::UpdateDisplay(std::string _name, Creature* owner):CreatureAction(owner) {
     name = _name;
     std::cout << "Display updated" << std::endl;
 }
