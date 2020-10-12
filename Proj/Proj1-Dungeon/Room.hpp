@@ -4,16 +4,15 @@
 #include <string>
 #include "Structure.hpp"
 #include "Creature.hpp"
+#include <vector>
 
-class Room:: public Structure{
+class Room: public Structure{
     private:
-        std::string roomName;
         int room;
-        Creature Monster;
     public:
-        void Room(std::string _roomName);
+        Room();
         void setId(int _room); 
-        void setCreature(Creature Monster);
-}
+        void setCreature(Creature* _monster);
+};
 
 #endif /* ROOM_H_ */

@@ -10,10 +10,13 @@
 #define Remove_hpp
 #include "CreatureAction.hpp"
 #include <stdio.h>
+#include "Creature.hpp"
 class Remove: public CreatureAction {
 public:
-    Remove(std::string _name, Creature _owner);
-    Creature owner;
+    typedef Creature super;
+    Remove(std::string _name, Creature* owner);
+    
+private:
     std::string name;
 
 };

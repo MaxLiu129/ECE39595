@@ -11,8 +11,9 @@
 
 #include <stdio.h>
 #include "Action.hpp"
+#include "Item.hpp"
 class ItemAction: public Action {
 public:
-    ItemAction(Item owner);
+    ItemAction(Item* owner);
 };
 #endif /* ItemAction_hpp */

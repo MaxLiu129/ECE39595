@@ -13,9 +13,9 @@
 #include "CreatureAction.hpp"
 class UpdateDisplay: public CreatureAction {
 public:
-    UpdateDisplay(std::string _name, Creature _owner);
+    UpdateDisplay(std::string _name, Creature* owner);
+private:
     std::string name;
-    Creature owner;
 };
 
 #endif /* UpdateDisplay_hpp */

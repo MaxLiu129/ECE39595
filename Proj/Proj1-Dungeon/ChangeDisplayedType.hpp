@@ -15,8 +15,10 @@
 
 class ChangeDisplayedType: public CreatureAction {
 public:
-    ChangeDisplayedType(std::string _name, Creature _owner);
+    typedef Creature super;
+    ChangeDisplayedType(std::string _name, Creature* owner);
+    
+private:
     std::string name;
-    Creature owner;
 };
 #endif /* ChangeDisplayedType_hpp */

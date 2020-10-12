@@ -9,6 +9,6 @@
 #include "CreatureAction.hpp"
 #include <iostream>
 
-CreatureAction::CreatureAction(Creature owner) {
+CreatureAction::CreatureAction(Creature* owner) {
     std::cout << "Creature Action constructed" << std::endl;
 }

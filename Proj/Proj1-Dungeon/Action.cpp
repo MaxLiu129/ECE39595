@@ -9,14 +9,17 @@
 #include "Action.hpp"
 #include <iostream>
 
-void Action::setMessage(std::string msg) {
+void Action::setMessage(std::string _msg) {
+    msg = _msg;
     std::cout << "setMessage" << std::endl;
 }
 
-void Action::setIntValue(int v) {
+void Action::setIntValue(int _v) {
+    v = _v;
     std::cout << "setIntValue" << std::endl;
 }
 
-void Action::setCharValue(char c) {
+void Action::setCharValue(char _c) {
+    c = _c;
     std::cout << "setCharValue" << std::endl;
 }

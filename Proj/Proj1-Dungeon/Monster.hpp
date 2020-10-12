@@ -17,6 +17,7 @@ public:
     Monster();
     void setName(std::string _name);
     void setID(int _room, int _serial);
+private:
     std::string name;
     int room;
     int serial;

@@ -11,11 +11,11 @@
 
 #include <stdio.h>
 #include "CreatureAction.hpp"
+#include "Creature.hpp"
 
 class YouWin: public CreatureAction {
 public:
-    YouWin(std::string _name, Creature _owner);
+    YouWin(std::string _name, Creature *owner);
     std::string name;
-    Creature owner;
 };
 #endif /* YouWin_hpp */

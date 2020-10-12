@@ -15,6 +15,7 @@ class Scroll: public Item {
 public:
     Scroll(std::string _name);
     void setID(int _room, int _serial);
+private:
     int room;
     int serial;
     std::string name;

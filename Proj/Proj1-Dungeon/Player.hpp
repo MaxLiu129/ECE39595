@@ -15,10 +15,10 @@
 
 class Player: public Creature {
 public:
-    void setWeapon(Item _sword);
-    void setArmor(Item _armor);
-    Item sword = NULL;
-    Item armor = NULL;
+    void setWeapon(Item *sword);
+    void setArmor(Item *armor);
+    Item* sword = NULL;
+    Item* armor = NULL;
 };
 
 #endif /* Player_hpp */

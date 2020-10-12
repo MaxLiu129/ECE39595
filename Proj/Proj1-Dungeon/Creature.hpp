@@ -5,17 +5,19 @@
 #include "Displayable.hpp"
 #include "CreatureAction.hpp"
 
-class Creature: public Displayable{
+class Creature: public Displayable {
 public:
     Creature();
     void setHp(int _h);
     void setHpMoves(int _hpm);
-    void setDeathAction(CreatureAction da);
-    void setHitAction(CreatureAction ha);
+    void setDeathAction(CreatureAction* da);
+    void setHitAction(CreatureAction* ha);
+    
+private:
     int h;
     int hpm;
-    CreatureAction deathAction;
-    CreatureAction hitAction;
-}
+    CreatureAction* deathAction;
+    CreatureAction* hitAction;
+};
 
 #endif /* CREATURE_H_ */

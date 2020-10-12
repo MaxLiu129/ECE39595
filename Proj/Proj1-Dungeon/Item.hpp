@@ -13,9 +13,8 @@
 #include "Displayable.hpp"
 #include "Creature.hpp"
 
-class Item: public displayable {
+class Item: public Displayable {
 public:
-    void setOwner(Creature _owner);
-    Creature owner;
-}
+    void setOwner(Creature* owner);
+};
 #endif /* Item_hpp */

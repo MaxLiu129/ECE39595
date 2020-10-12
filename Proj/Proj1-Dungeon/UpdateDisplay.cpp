@@ -9,9 +9,7 @@
 #include "UpdateDisplay.hpp"
 #include <iostream>
 
-UpdateDisplay::UpdateDisplay(std::string _name, Creature _owner) {
-    super(_owner);
+UpdateDisplay::UpdateDisplay(std::string _name, Creature* owner):CreatureAction(Creature *owner) {
     name = _name;
-    owner = _owner;
     std::cout << "Display updated";
 }

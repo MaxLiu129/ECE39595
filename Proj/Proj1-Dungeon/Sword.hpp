@@ -13,11 +13,12 @@
 #include "Item.hpp"
 
 class Sword: public Item {
-    Sword(std::string _name);
+public:
+    Sword();
     void setID(int _room, int _serial);
-    
+private:
     std::string name;
     int room;
     int serial;
-}
+};
 #endif /* Sword_hpp */

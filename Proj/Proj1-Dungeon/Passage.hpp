@@ -4,15 +4,15 @@
 #include "Structure.hpp"
 #include <string>
 
-class Passage: public Structure{
+class Passage: public Structure {
 private:
     std::string passageName;
 	int room1;
     int room2;
 
 public:
-    void Passage();
-    void setName(std::string _passageName) ;
+    Passage();
+    void setName(std::string _passageName);
     void setID(int _room1, int _room2);
 };
 

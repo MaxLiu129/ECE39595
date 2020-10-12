@@ -14,9 +14,14 @@
 
 class Action {
 public:
-    void setMessage(std::string msg);
-    void setIntValue(int v);
-    void setCharValue(char c);
+    void setMessage(std::string _msg);
+    void setIntValue(int _v);
+    void setCharValue(char _c);
+    
+private:
+    int v;
+    char c;
+    std::string msg;
 };
 
 #endif /* Action_hpp */

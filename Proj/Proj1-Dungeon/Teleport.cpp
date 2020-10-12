@@ -9,9 +9,7 @@
 #include "Teleport.hpp"
 #include <iostream>
 
-Teleport::Teleport(std::string _name, Creature _owner) {
-    super(_owner);
+Teleport::Teleport(std::string _name, Creature* owner):CreatureAction(Creature *owner) {
     name = _name;
-    owner = _owner;
     std::cout << "Teleport";
 }

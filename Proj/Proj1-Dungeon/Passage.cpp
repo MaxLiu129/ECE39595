@@ -2,17 +2,17 @@
 
 #include <string>
 
-class Passage::Passage(){
+Passage::Passage(){
     std::cout << "Passage() called." << std::endl;
 }
 
-class Passage::setName(std::string _passageName){
+void Passage::setName(std::string _passageName) {
     passageName = _passageName;
     std::cout << "setName(std::string _passageName) called." << std::endl;
 }
 
 
-class Passage::setID(int _room1, int _room2){
+void Passage::setID(int _room1, int _room2){
     room1 = _room1;
     room2 = _room2;
     std::cout << "setID(int _room1, int _room2) called." << std::endl;

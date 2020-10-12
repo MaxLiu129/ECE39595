@@ -3,31 +3,33 @@
 
 #include <string>
 
-class displayable{
-    private:
-        int maxHit;
-        int hpMoves;
-        int Hp;
-        char t;
-        int v;
-        int PosX;
-        int PosY;
-        int WidthX;
-        int HeightY;
 
-    public:
-        void displayable::Displayable();
-        void displayable::setInvisible();
-        void displayable::setVisible( );
-        void displayable::setMaxHit(int _maxHit);
-        void displayable::setHpMove(int _hpMoves);
-        void displayable::setHp(int _Hp);
-        void displayable::setType(char _t);
-        void displayable::setIntValue(int _v);
-        void displayable::SetPosX(int x);
-        void displayable::setPosY(int y);
-        void displayable::SetWidth(int x);
-        void displayable::setHeight(int y);
-}
+class Displayable{
+
+public:
+    Displayable();
+    void setInvisible();
+    void setVisible( );
+    void setMaxHit(int _maxHit);
+    void setHpMove(int _hpMoves);
+    void setHp(int _Hp);
+    void setType(char _t);
+    void setIntValue(int _v);
+    void SetPosX(int _posx);
+    void setPosY(int _posy);
+    void SetWidth(int _widx);
+    void setHeight(int _heiy);
+
+private:
+    int maxHit;
+    int hpMoves;
+    int Hp;
+    char t;
+    int v;
+    int PosX;
+    int PosY;
+    int WidthX;
+    int HeightY;
+};
 
 #endif /* DISPLAYABLE_H_ */

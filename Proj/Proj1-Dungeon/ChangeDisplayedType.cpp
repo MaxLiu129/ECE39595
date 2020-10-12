@@ -9,9 +9,8 @@
 #include "ChangeDisplayedType.hpp"
 #include <iostream>
 
-ChangeDisplayedType::ChangeDisplayedType(std::string _name, Creature _owner) {
-    super(_owner);
+ChangeDisplayedType::ChangeDisplayedType(std::string _name, Creature* owner):CreatureAction(Creature* owner) {
+    (super(*owner));
     name = _name;
-    owner = _owner;
     std::cout << "ChangeDisplayedType" << std::endl;
 }

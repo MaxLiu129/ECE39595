@@ -9,12 +9,12 @@
 #include "Armor.hpp"
 #include <iostream>
 
-Armor::Armor(std::string _name) {
-    name = _name;
+Armor::Armor() {
     std::cout << "Armor constructed";
 
 }
 void Armor::setName(std::string _name) {
+    name = _name;
     std::cout << "set name for Armor";
 
 }

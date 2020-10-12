@@ -11,10 +11,12 @@
 
 #include <stdio.h>
 #include "CreatureAction.hpp"
+#include "Creature.hpp"
 class EndGame: public CreatureAction {
 public:
-    EndGame(std::string _name, Creature _owner);
+    typedef Creature super;
+    EndGame(std::string _name, Creature* owner);
+private:
     std::string name;
-    Creature owner;
 };
 #endif /* EndGame_hpp */

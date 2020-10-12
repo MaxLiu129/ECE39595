@@ -11,10 +11,14 @@
 
 #include <stdio.h>
 #include "CreatureAction.hpp"
+#include "Creature.hpp"
+
 class DropPack: public CreatureAction {
 public:
-    DropPack(std::string _name, Creature _owner);
+    typedef Creature super;
+    DropPack(std::string _name, Creature* owner);
+    
+private:
     std::string name;
-    Creature owner;
 };
 #endif /* DropPack_hpp */

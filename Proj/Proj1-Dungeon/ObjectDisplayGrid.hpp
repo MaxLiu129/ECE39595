@@ -21,19 +21,17 @@
 
 class ObjectDisplayGrid {
 public:
-    virtual void getObjectDisplayGrid(int _gameHeight, int _width, int _topHeight);
+    void getObjectDisplayGrid(int _gameHeight, int _width, int _topHeight);
     
-    virtual void setTopMessageHeight(int _topHeight);
+    void setTopMessageHeight(int _topHeight);
     
-    virtual void setBotHeight(int _bottomHeight);
-    
+    void setBotHeight(int _bottomHeight);
+private:
     int gameHeight;
     int width;
     int topHeight;
     int bottomHeight;
-    
-private:
-    
+        
 };
 
 #endif /* ObjectDisplayGrid_hpp */

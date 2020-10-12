@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "Displayable.hpp"
 
-class Magic: public displayable {
+class Magic: public Displayable {
 public:
     Magic();
 };

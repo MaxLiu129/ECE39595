@@ -9,9 +9,8 @@
 #include "DropPack.hpp"
 #include <iostream>
 
-DropPack::DropPack(std::string _name, Creature _owner) {
-    super(_owner);
+DropPack::DropPack(std::string _name, Creature* owner): CreatureAction(Creature* owner) {
+    (super(*owner));
     name = _name;
-    owner = _owner;
-    std::cout << "DropPack";
+    std::cout << "DropPack" << std::endl;
 }

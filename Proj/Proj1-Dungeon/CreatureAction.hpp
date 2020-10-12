@@ -10,10 +10,12 @@
 #define CreatureAction_hpp
 #include "Action.hpp"
 #include <stdio.h>
+
+
 #include "Creature.hpp"
 
 class CreatureAction: public Action {
 public:
-    CreatureAction(Creature owner);
+    CreatureAction(Creature* owner);
 };
 #endif /* CreatureAction_hpp */

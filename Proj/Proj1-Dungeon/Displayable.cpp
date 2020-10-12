@@ -5,64 +5,64 @@
 //#include "item.hpp"
 //#include "magic.hpp"
 #include <string>
+#include <iostream>
 
-
-void displayable::Displayable() {
+Displayable::Displayable() {
     std::cout << "Displayable() called." << std::endl;
 }
 
-void displayable::setInvisible() {
+void Displayable::setInvisible() {
     std::cout << "setInvisible() called." << std::endl;
 }
 
-void displayable::setVisible( ) {
+void Displayable::setVisible( ) {
     std::cout << "setVisible( ) called." << std::endl;
 }
 
-void displayable::setMaxHit(int _maxHit) {
+void Displayable::setMaxHit(int _maxHit) {
     maxHit = _maxHit;
-    std::cout << "setMaxHit(int _maxHit) called, maxHit is set to " + Integer.toString(maxHit) << std::endl;
+    std::cout << "setMaxHit(int _maxHit) called" << std::endl;
      
 }
 
-void displayable::setHpMove(int _hpMoves) {
+void Displayable::setHpMove(int _hpMoves) {
     hpMoves = _hpMoves;
-    std::cout << "setHpMove(int _hpMoves) called, hpMoves is set to " + Integer.toString(hpMoves)  << std::endl;
+    std::cout << "setHpMove(int _hpMoves) called"  << std::endl;
 }
 
-void displayable::setHp(int _Hp) {
+void Displayable::setHp(int _Hp) {
     Hp = _Hp;
-    std::cout << "setHp(int _Hp) called, Hp is set to " + Integer.toString(Hp) << std::endl;
+    std::cout << "setHp(int _Hp) called, Hp is set to " << std::endl;
 }
 
-void displayable::setType(char _t) {
+void Displayable::setType(char _t) {
     t = _t;
-    std::cout << "setType(char _t) called, t is set to " + Integer.toString(t) << std::endl;
+    std::cout << "setType(char _t) called, t is set to" << std::endl;
 }
 
-void displayable::setIntValue(int _v) {
+void Displayable::setIntValue(int _v) {
     v = _v;
-    std::cout << "setIntValue(int _v) called, v is set to " + Integer.toString(v) << std::endl;
+    std::cout << "setIntValue(int _v) called" << std::endl;
 }
 
-void displayable::SetPosX(int _x) {
-    PosX = _x;
-    std::cout << "setPosX(int _x) called, PosX is set to " + Integer.toString(PosX) << std::endl;
+void Displayable::SetPosX(int _posx) {
+    PosX = _posx;
+    std::cout << "setPosX(int _x) called" << std::endl;
 }
 
-void displayable::setPosY(int _y) {
-    PosY = _y;
-    std::cout << "setPosY(int _y) called, PosY is set to " + Integer.toString(PosY) << std::endl;
+void Displayable::setPosY(int _posy) {
+    PosY = _posy;
+    std::cout << "setPosY(int _y) called" << std::endl;
 }
 
-void displayable::SetWidth(int _x) {
-    WidthX = _x;
-    std::cout << "setWidth(int _x) called, WidthX is set to " + Integer.toString(WidthX) << std::endl;
+void Displayable::SetWidth(int _widx) {
+    WidthX = _widx;
+    std::cout << "setWidth(int _x) called" << std::endl;
 }
 
-void displayable::setHeight(int _y) {
-    HeightY = _y;
-    std::cout << "setHeight(int _y) called, HeightY is set to " + Integer.toString(HeightY)<< std::endl;
+void Displayable::setHeight(int _heiy) {
+    HeightY = _heiy;
+    std::cout << "setHeight(int _y) called" << std::endl;
 }
 
 

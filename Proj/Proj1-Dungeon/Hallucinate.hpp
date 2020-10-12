@@ -11,8 +11,9 @@
 
 #include <stdio.h>
 #include "ItemAction.hpp"
+#include "Creature.hpp"
 class Hallucinate: public ItemAction {
 public:
-    Hallucinate(Creature owner);
-}
+    Hallucinate(Creature* owner);
+};
 #endif /* Hallucinate_hpp */
