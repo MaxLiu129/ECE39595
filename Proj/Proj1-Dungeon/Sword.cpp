@@ -17,6 +17,6 @@ Sword::Sword(std::string _name) {
 void Sword::setID(int _room, int _serial) {
     room = _room;
     serial = _serial;
-    std::cout << "Set ID for Sword";
+    std::cout << "Set ID for Sword" << std::endl;
 
 }

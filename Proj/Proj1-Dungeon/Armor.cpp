@@ -10,17 +10,17 @@
 #include <iostream>
 
 Armor::Armor() {
-    std::cout << "Armor constructed";
+    std::cout << "Armor constructed" << std::endl;
 
 }
 void Armor::setName(std::string _name) {
     name = _name;
-    std::cout << "set name for Armor";
+    std::cout << "set name for Armor" << std::endl;
 
 }
 void Armor::setID(int _room, int _serial) {
     room = _room;
     serial = _serial;
-    std::cout << "Set ID for Armor";
+    std::cout << "Set ID for Armor" << std::endl;
 
 }

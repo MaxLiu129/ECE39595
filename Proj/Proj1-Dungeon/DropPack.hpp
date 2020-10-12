@@ -9,13 +9,13 @@
 #ifndef DropPack_hpp
 #define DropPack_hpp
 
+class Creature;
 #include <stdio.h>
 #include "CreatureAction.hpp"
 #include "Creature.hpp"
 
 class DropPack: public CreatureAction {
 public:
-    typedef Creature super;
     DropPack(std::string _name, Creature* owner);
     
 private:

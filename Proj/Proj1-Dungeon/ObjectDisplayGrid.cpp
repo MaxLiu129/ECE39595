@@ -21,12 +21,12 @@ void ObjectDisplayGrid::getObjectDisplayGrid(int _gameHeight, int _width, int _t
     gameHeight = _gameHeight;
     width = _width;
     topHeight = _topHeight;
-    std::cout << "Object Display Grid get";
+    std::cout << "Object Display Grid get" << std::endl;
 }
 
 void ObjectDisplayGrid::setTopMessageHeight(int _topHeight) {
     topHeight = _topHeight;
-    std::cout << "Top message height set";
+    std::cout << "Top message height set" << std::endl;
 }
 
 void ObjectDisplayGrid::setBotHeight(int _bottomHeight) {

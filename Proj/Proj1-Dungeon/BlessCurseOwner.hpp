@@ -15,6 +15,6 @@
 
 class BlessCurseOwner: public ItemAction {
 public:
-    BlessCurseOwner(Creature* owner);
+    BlessCurseOwner(Item* owner);
 };
 #endif /* BlessCurseOwner_hpp */

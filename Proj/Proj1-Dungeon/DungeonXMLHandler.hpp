@@ -5,11 +5,34 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include "Displayable.hpp"
-#include "Structure.hpp"
+
+#include "Action.hpp"
+#include "Armor.hpp"
+#include "BlessCurseOwner.hpp"
+#include "ChangeDisplayedType.hpp"
 #include "Creature.hpp"
+#include "CreatureAction.hpp"
+#include "Displayable.hpp"
+#include "DropPack.hpp"
+#include "Dungeon.hpp"
+#include "EndGame.hpp"
+#include "Hallucinate.hpp"
 #include "Item.hpp"
+#include "ItemAction.hpp"
 #include "Magic.hpp"
+#include "Monster.hpp"
+#include "ObjectDisplayGrid.hpp"
+#include "Passage.hpp"
+#include "Player.hpp"
+#include "Remove.hpp"
+#include "Room.hpp"
+#include "Scroll.hpp"
+#include "Structure.hpp"
+#include "Sword.hpp"
+#include "Teleport.hpp"
+#include "UpdateDisplay.hpp"
+#include "YouWin.hpp"
+
 #include <xercesc/sax2/SAX2XMLReader.hpp>
 #include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/sax2/DefaultHandler.hpp>
@@ -24,27 +47,26 @@ class DungeonXMLHandler : public xercesc::DefaultHandler{
         std::string CLASSID = "DungeonXMLHandler";
         std::string data ;
 
-        DisplayType displayType = null;
-        StringBuilder data = null;
+        /*DisplayType displayType;*/
+        std::string displayType = NULL;
+        //const DisplayType ROOM;
+        //const DisplayType PASSAGE;
+        //const DisplayType MONSTER;
+        //const DisplayType PLAYER;
+        //const DisplayType SCROLL;
+        //const DisplayType SWORD;
+        //const DisplayType ARMOR;
 
-        const DisplayType ROOM;
-        const DisplayType PASSAGE;
-        const DisplayType MONSTER;
-        const DisplayType PLAYER;
-        const DisplayType SCROLL;
-        const DisplayType SWORD;
-        const DisplayType ARMOR;
-
-        Dungeon dungeonBeingparsed = null;
-        ObjectDisplayGrid odgBeingParsed = null;
-        Room roomBeingParsed = null;
-        Passage passageBeingParsed = null;
-        Monster monsterBeingParsed = null;
-        Player playerBeingParsed = null;
-        Scroll scrollBeingParsed = null;
-        Sword swordBeingParsed = null;
-        Armor armorBeingParsed = null;
-        Action actionBeingParsed = null;
+        Dungeon* dungeonBeingparsed = NULL;
+        ObjectDisplayGrid* odgBeingParsed = NULL;
+        Room* roomBeingParsed = NULL;
+        Passage* passageBeingParsed = NULL;
+        Monster* monsterBeingParsed = NULL;
+        Player* playerBeingParsed = NULL;
+        Scroll* scrollBeingParsed = NULL;
+        Sword* swordBeingParsed = NULL;
+        Armor* armorBeingParsed = NULL;
+        Action* actionBeingParsed = NULL;
 
         bool inPlayer = false;
         bool bvisible = false;
@@ -60,8 +82,6 @@ class DungeonXMLHandler : public xercesc::DefaultHandler{
         bool bactionintval = false;
         bool bactionmessage = false;
         bool bactioncharval = false;
-
-        void addStudent(Student student);
     
     public:
         void startElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName, const xercesc::Attributes& attributes);
@@ -72,16 +92,6 @@ class DungeonXMLHandler : public xercesc::DefaultHandler{
         DungeonXMLHandler();
 
 };
-
-const DisplayType Displaytype::ROOM = ROOM;
-const DisplayType Displaytype::PASSAGE = PASSAGE;
-const DisplayType Displaytype::MONSTER = MONSTER;
-const DisplayType Displaytype::PLAYER = PLAYER;
-const DisplayType Displaytype::SCROLL = SCROLL;
-const DisplayType Displaytype::SWORD = SWORD;
-const DisplayType Displaytype::ARMOR = ARMOR;
-
-
 
 
 

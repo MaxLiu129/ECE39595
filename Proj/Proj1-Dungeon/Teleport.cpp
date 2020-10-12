@@ -11,5 +11,5 @@
 
 Teleport::Teleport(std::string _name, Creature* owner):CreatureAction(Creature *owner) {
     name = _name;
-    std::cout << "Teleport";
+    std::cout << "Teleport" << std::endl;
 }

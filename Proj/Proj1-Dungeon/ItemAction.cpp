@@ -10,5 +10,5 @@
 #include <iostream>
 
 ItemAction::ItemAction(Item* owner) {
-    std::cout << "Item action constructed";
+    std::cout << "Item action constructed" << std::endl;
 }

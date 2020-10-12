@@ -10,7 +10,6 @@
 #include <iostream>
 
 EndGame::EndGame(std::string _name, Creature* owner):CreatureAction(Creature* owner) {
-    (super(*owner));
     name = _name;
-    std::cout << "End game with name" + _name;
+    std::cout << "End game with name" + _name << std::endl;
 }

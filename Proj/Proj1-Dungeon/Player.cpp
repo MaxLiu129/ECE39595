@@ -11,11 +11,11 @@
 
 void Player::setWeapon(Item* sword) {
     //sword = _sword;
-    std::cout << "set weapon";
+    std::cout << "set weapon" << std::endl;
 }
 
 void Player::setArmor(Item* armor) {
     //armor = _armor;
-    std::cout << "set armor";
+    std::cout << "set armor" << std::endl;
 
 }

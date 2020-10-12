@@ -10,7 +10,6 @@
 #include <iostream>
 
 ChangeDisplayedType::ChangeDisplayedType(std::string _name, Creature* owner):CreatureAction(Creature* owner) {
-    (super(*owner));
     name = _name;
     std::cout << "ChangeDisplayedType" << std::endl;
 }

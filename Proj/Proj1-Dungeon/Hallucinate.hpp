@@ -14,6 +14,6 @@
 #include "Creature.hpp"
 class Hallucinate: public ItemAction {
 public:
-    Hallucinate(Creature* owner);
+    Hallucinate(Item* owner);
 };
 #endif /* Hallucinate_hpp */

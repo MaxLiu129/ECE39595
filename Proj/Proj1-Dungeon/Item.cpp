@@ -11,5 +11,5 @@
 
 void Item::setOwner(Creature* owner) {
     //owner =_owner;
-    std::cout << "owner set";
+    std::cout << "owner set" << std::endl;
 }

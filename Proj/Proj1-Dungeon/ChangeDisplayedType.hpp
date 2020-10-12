@@ -15,7 +15,6 @@
 
 class ChangeDisplayedType: public CreatureAction {
 public:
-    typedef Creature super;
     ChangeDisplayedType(std::string _name, Creature* owner);
     
 private:

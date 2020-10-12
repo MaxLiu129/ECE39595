@@ -9,6 +9,6 @@
 #include "Hallucinate.hpp"
 #include <iostream>
 
-Hallucinate::Hallucinate(Creature* owner) {
-    std::cout << "Bless Curse Owner constructed";
+Hallucinate::Hallucinate(Item* owner):ItemAction(Item *owner) {
+    std::cout << "Bless Curse Owner constructed" << std::endl;
 }

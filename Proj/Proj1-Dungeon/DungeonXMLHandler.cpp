@@ -14,8 +14,27 @@ inline std::string boolToString(bool booleanValue){
     return booleanValue ? "true": "false";
 }
 
-std::vector<Student> DungeonXMLHandler::getStudents() {
-    return students;
+std::string xmlChToString(const XMLCh* xmlChName, int length = -1){
+    //Xerces Parses file into XMLCh* string. So use Transcode to allocate a char* buffer
+    char * chStarName = xercesc::XMLString::transcode(xmlChName); 
+    if(length == -1){
+        std::string StrName(chStarName);
+        xercesc::XMLString::release(&chStarName);
+        return StrName;
+    }
+    else{
+        std::string StrName(chStarName,0,length);
+        xercesc::XMLString::release(&chStarName);
+        return StrName;
+    }
+
+}
+
+const XMLCh* getXMLChAttributeFromString(const xercesc::Attributes& attributes, const char * strGet){
+    XMLCh * xmlChGet = xercesc::XMLString::transcode(strGet);
+    const XMLCh * xmlChAttr = attributes.getValue(xmlChGet);
+    xercesc::XMLString::release((&xmlChGet));
+    return xmlChAttr;
 }
 
 DungeonXMLHandler::DungeonXMLHandler() {
@@ -29,188 +48,160 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
             std::cout << CLASSID << ".startElement qName: " << qNameStr << std::endl;
         }
         if (case_insensitive_match(qNameStr, "Dungeon")){
-            dungeonBeingparsed = new Dungoen();      //dbp = Dungeon Being Parsed
-            odgBeingParsed = new ObjectDisplayGrid();   //obp = odg Being Parsed
+            // dungeonBeingparsed = new Dungoen();      //dbp = Dungeon Being Parsed
+            // odgBeingParsed = new ObjectDisplayGrid();   //obp = odg Being Parsed
 
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes,"name"));;
-            int width = std::stoi(attributes.getValue("width"));
-            int gameHeight = std::stoi(attributes.getValue("gameHeight"));
-            int topHeight = std::stoi(attributes.getValue("topHeight"));
-            int bottomHeight = std::stoi(attributes.getValue("bottomHeight"));
+            int width = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"width")));
+            int gameHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"gameHeight")));
+            int topHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"topHeight")));
+            int bottomHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"bottomHeight")));
 
-            dungeonBeingparsed.getDungeon(name, width, gameHeight);
-            odgBeingParsed.getObjectDisplayGrid(gameHeight, width, topHeight);
-            odgBeingParsed.setbottomHeight(bottomHeight);
+            dungeonBeingparsed->getDungeon(name, width, gameHeight);
+            odgBeingParsed->getObjectDisplayGrid(gameHeight, width, topHeight);
+            odgBeingParsed->setBotHeight(bottomHeight);
         }
         else if(case_insensitive_match(qNameStr, "Rooms")){}
         else if(case_insensitive_match(qNameStr, "Room")){
-            int id = std::stoi(attributes.getValue("room"));
-            roomBeingParsed = new Room(std::stoi(id));
-            displayType = DisaplayType.ROOM;
+            int id = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
+            Room* room;
+            roomBeingParsed->setId(id);
+            dungeonBeingparsed->addRoom(room);
+
+            displayType = "ROOM";
         }
         else if(case_insensitive_match(qNameStr, "Passages")){}
         else if(case_insensitive_match(qNameStr, "Passage")){
-            int room1 = std::stoi(attributes.getValue("room1"));
-            int room2 = std::stoi(attributes.getValue("room2"));
+            int room1 = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room1")));
+            int room2 = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room2")));
             passageBeingParsed = new Passage();
-            passageBeingParsed.setID(room1, room2);
-            displayType = DisplayType.PASSAGE; 
+            passageBeingParsed->setID(room1, room2);
+
+            displayType = "PASSAGE"; 
         }
         else if(case_insensitive_match(qNameStr, "Monster")){
             monsterBeingParsed = new Monster();
-            String name = attributes.getValue("name");
-            int room = std::stoi(attributes.getValue("room"));
-            int serial = std::stoi(attributes.getValue("serial"));
-            monsterBeingParsed.setID(room, serial);
-            monsterBeingParsed.setName(name);
-            displayType = DisplayType.MONSTER;
+            std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
+            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
+            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            monsterBeingParsed->setID(room, serial);
+            monsterBeingParsed->setName(name);
+            displayType = "MONSTER";
         }
         else if(case_insensitive_match(qNameStr, "Player")){
             playerBeingParsed = new Player();
-            displayType = DisplayType.PLAYER;
+            //std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
+            //int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
+            //int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            //playerBeingParsed->setID(room, serial);
+            //playerBeingParsed->setName(name);
+            displayType = "PLAYER";
             inPlayer = true; 
         }
         else if(case_insensitive_match(qNameStr, "Scroll")){
-            String name = attributes.getValue("name");
-            int room = std::stoi(attributes.getValue("room"));
-            int serial = std::stoi(attributes.getValue("serial"));
+            std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
+            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
+            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
             scrollBeingParsed = new Scroll(name);
-            scrollBeingParsed.setID(room, serial);
-            displayType = DisplayType.SCROLL;
+            scrollBeingParsed->setID(room, serial);
+            displayType = "SCROLL";
         }
         else if(case_insensitive_match(qNameStr, "Sword")){
-            String name = attributes.getValue("name");
-            int room = std::stoi(attributes.getValue("room"));
-            int serial = std::stoi(attributes.getValue("serial"));
-            swordBeingParsed = new Sword(name);
-            swordBeingParsed.setID(room, serial);
-            displayType = DisplayType.SWORD;
+            std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
+            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
+            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            swordBeingParsed = new Sword();
+            swordBeingParsed->setID(room, serial);
+            displayType = "SWORD";
         }
         else if(case_insensitive_match(qNameStr, "Armor")){
-            String name = attributes.getValue("name");
-            int room = Integer.parseInt(attributes.getValue("room"));
-            int serial = Integer.parseInt(attributes.getValue("serial"));
-            armorBeingParsed = new Armor(name);
-            armorBeingParsed.setID(room, serial);
-            displayType = DisplayType.ARMOR;
+            std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
+            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
+            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            armorBeingParsed = new Armor();
+            armorBeingParsed->setID(room, serial);
+            displayType = "ARMOR";
         }
-        else if(case_insensitive_match(qNameStr, "CreatureAction") || case_insensitive_match(qNameStr, "ItemAction") ){
+        else if (case_insensitive_match(qNameStr, "CreatureAction") || case_insensitive_match(qNameStr, "ItemAction")) {
             //this gonna be long
-            String name = attributes.getValue("name");
-            String type = attributes.getValue("type");
-
-            switch (name) {
-                case "ChangeDisplayedType" :
-                    if (displayType == DisplayType.MONSTER) {
-                        actionBeingParsed = new ChangeDisplayedType(type, monsterBeingParsed);
-                    } else {
-                        actionBeingParsed = new ChangeDisplayedType(type, playerBeingParsed);
-                    }
-                    break;
-                case "DropPack" :
-                    if (displayType == DisplayType.MONSTER) {
-                        actionBeingParsed = new DropPack(type, monsterBeingParsed);
-                    } else {
-                        actionBeingParsed = new DropPack(type, playerBeingParsed);
-                    }                    
-                    break;
-                case "EndGame" :
-                    if (displayType == DisplayType.MONSTER) {
-                        actionBeingParsed = new EndGame(type, monsterBeingParsed);
-                    } else {
-                        actionBeingParsed = new EndGame(type, playerBeingParsed);
-                    }                    
-                    break;
-                case "Remove" :
-                    if (displayType == DisplayType.MONSTER) {
-                        actionBeingParsed = new Remove(type, monsterBeingParsed);
-                    } else {
-                        actionBeingParsed = new Remove(type, playerBeingParsed);
-                    }                    
-                    break;
-                case "Teleport" :
-                    if (displayType == DisplayType.MONSTER) {
-                        actionBeingParsed = new Teleport(type, monsterBeingParsed);
-                    } else {
-                        actionBeingParsed = new Teleport(type, playerBeingParsed);
-                    }                    
-                    break;
-                case "UpdateDisplay" :
-                    if (displayType == DisplayType.MONSTER) {
-                        actionBeingParsed = new UpdateDisplay(type, monsterBeingParsed);
-                    } else {
-                        actionBeingParsed = new UpdateDisplay(type, playerBeingParsed);
-                    }                    
-                    break;
-                case "YouWin" :
-                    if (displayType == DisplayType.MONSTER) {
-                        actionBeingParsed = new YouWin(type, monsterBeingParsed);
-                    } else {
-                        actionBeingParsed = new YouWin(type, playerBeingParsed);
-                    }                    
-                    break;
-                case "Hallucinate" :
-                    if (displayType == DisplayType.ARMOR) {
-                        actionBeingParsed = new Hallucinate(armorBeingParsed);
-                    } else if (displayType == DisplayType.SCROLL) {
-                        actionBeingParsed = new Hallucinate(scrollBeingParsed);
-                    } else {
-                        actionBeingParsed = new Hallucinate(swordBeingParsed);
-                    }
-                    break;
-                case "BlessCurseOwner" :
-                    if (displayType == DisplayType.ARMOR) {
-                        actionBeingParsed = new BlessCurseOwner(armorBeingParsed);
-                    } else if (displayType == DisplayType.SCROLL) {
-                        actionBeingParsed = new BlessCurseOwner(scrollBeingParsed);
-                    } else {
-                        actionBeingParsed = new BlessCurseOwner(swordBeingParsed);
-                    }
-                    break;
-                case "BlessArmor" :
-                    if (displayType == DisplayType.ARMOR) {
-                        actionBeingParsed = new BlessArmor(armorBeingParsed);
-                    } else if (displayType == DisplayType.SCROLL) {
-                        actionBeingParsed = new BlessArmor(scrollBeingParsed);
-                    } else {
-                        actionBeingParsed = new BlessArmor(swordBeingParsed);
-                    }
-                    break;
-                default: 
-                    std::cout << "Unknown action: " + name << std::endl;
-                    break;
-        }
-        } else if (qName.equalsIgnoreCase("visible")) {
+            std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
+            std::string type = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
+            if (name.compare("ChangeDisplayedType") == 0) {}
+            else if (name.compare("DropPack") == 0) {}
+            else if (name.compare("EndGame") == 0) {}
+            else if (name.compare("Remove") == 0) {}
+            else if (name.compare("Teleport") == 0) {}
+            else if (name.compare("UpdateDisplay") == 0) {}
+            else if (name.compare("YouWin") == 0) {}
+            else if (name.compare("Hallucinate") == 0) {}
+            else if (name.compare("BlessCurseOwner") == 0) {}
+            else if (name.compare("BlessArmor") == 0) {}
+            else {
+                std::cout << "Unknown action: " + name << std::endl;
+            }
+            if (type.compare("death") == 0) {
+                CreatureAction* ca = (CreatureAction*)actionBeingParsed;
+                if (displayType == "PLAYER") {
+                    playerBeingParsed->setDeathAction(ca);
+                }
+                else {
+                    monsterBeingParsed->setDeathAction(ca);
+                }
+            }
+            else if (type.compare("hit") == 0) {
+                CreatureAction* ca = (CreatureAction*)actionBeingParsed;
+                if (displayType == "PLAYER") {
+                    playerBeingParsed->setDeathAction(ca);
+                }
+                else {
+                    monsterBeingParsed->setDeathAction(ca);
+                }
+            }
+        } 
+        else if (case_insensitive_match(qNameStr, "visible")) {
             bvisible = true;
-        } else if (qName.equalsIgnoreCase("posX")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "posX")) {
             bposX = true;
-        } else if (qName.equalsIgnoreCase("posY")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "posY")) {
             bposY = true;
-        } else if (qName.equalsIgnoreCase("width")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "width")) {
             bwidth = true;
-        } else if (qName.equalsIgnoreCase("height")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "height")) {
             bheight = true;
-        } else if (qName.equalsIgnoreCase("type")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "type")) {
             btype = true;
-        } else if (qName.equalsIgnoreCase("hp")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "hp")) {
             bhp = true;
-        } else if (qName.equalsIgnoreCase("maxhit")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "maxhit")) {
             bmaxhit = true;
-        } else if (qName.equalsIgnoreCase("hpMoves")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "hpMoves")) {
             bhpMoves = true;
-        } else if (qName.equalsIgnoreCase("ItemIntValue")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "ItemIntValue")) {
             bitemintval = true;
-        } else if (qName.equalsIgnoreCase("actionIntValue")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "actionIntValue")) {
             bactionintval = true;
-        } else if (qName.equalsIgnoreCase("actionMessage")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "actionMessage")) {
             bactionmessage = true;
-        } else if (qName.equalsIgnoreCase("actionCharValue")) {
+        } 
+        else if (case_insensitive_match(qNameStr, "actionCharValue")) {
             bactioncharval = true;
-        } else {
-            std::cout << "Unknown qname: " + qName << std::endl;
+        } 
+        else {
+            std::cout << "Unknown qname" << std::endl;
         }
 
-        data = new StringBuilder();
+        //data = new StringBuilder();
         xercesc::XMLString::release(&qNameStr);
 }
 
@@ -224,196 +215,198 @@ void DungeonXMLHandler::fatalError(const xercesc::SAXParseException& exception)
     xercesc::XMLString::release(&message);
 }
 
-void endElement(String uri, String localName, String qName){
-        if (bvisible) {
-            if (std::stoi(std::to_string(data)) == 1) {
-                if (displayType == DisplayType.ROOM) {
-                    roomBeingParsed.setVisible();
-                } else if (displayType == DisplayType.PASSAGE) {
-                    passageBeingParsed.setVisible();
-                } else if (displayType == DisplayType.MONSTER) {
-                    monsterBeingParsed.setVisible();
-                } else if (displayType == DisplayType.PLAYER) {
-                    playerBeingParsed.setVisible();
-                } else if (displayType == DisplayType.SCROLL) {
-                    scrollBeingParsed.setVisible();
-                } else if (displayType == DisplayType.SWORD) {
-                    swordBeingParsed.setVisible();
-                } else if (displayType == DisplayType.ARMOR) {
-                    armorBeingParsed.setVisible();
+void DungeonXMLHandler::endElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName) {
+        char* qNameStr = xercesc::XMLString::transcode(qName);
+        if (bvisible) {   
+            if(std::stoi(data) == 1){
+                if (displayType == "ROOM") {
+                    roomBeingParsed->setVisible();
+                } else if (displayType == "PASSAGE") {
+                    passageBeingParsed->setVisible();
+                } else if (displayType == "MONSTER") {
+                    monsterBeingParsed->setVisible();
+                } else if (displayType == "PLAYER") {
+                    playerBeingParsed->setVisible();
+                } else if (displayType == "SCROLL") {
+                    scrollBeingParsed->setVisible();
+                } else if (displayType == "SWORD") {
+                    swordBeingParsed->setVisible();
+                } else if (displayType == "ARMOR") {
+                    armorBeingParsed->setVisible();
                 }
-            } else {
-                if (displayType == DisplayType.ROOM) {
-                    roomBeingParsed.setInvisible();
-                } else if (displayType == DisplayType.PASSAGE) {
-                    passageBeingParsed.setInvisible();
-                } else if (displayType == DisplayType.MONSTER) {
-                    monsterBeingParsed.setInvisible();
-                } else if (displayType == DisplayType.PLAYER) {
-                    playerBeingParsed.setInvisible();
-                } else if (displayType == DisplayType.SCROLL) {
-                    scrollBeingParsed.setInvisible();
-                } else if (displayType == DisplayType.SWORD) {
-                    swordBeingParsed.setInvisible();
-                } else if (displayType == DisplayType.ARMOR) {
-                    armorBeingParsed.setInvisible();
+            } 
+            else {
+                if (displayType == "ROOM") {
+                    roomBeingParsed->setInvisible();
+                } else if (displayType == "PASSAGE") {
+                    passageBeingParsed->setInvisible();
+                } else if (displayType == "MONSTER") {
+                    monsterBeingParsed->setInvisible();
+                } else if (displayType == "PLAYER") {
+                    playerBeingParsed->setInvisible();
+                } else if (displayType == "SCROLL") {
+                    scrollBeingParsed->setInvisible();
+                } else if (displayType == "SWORD") {
+                    swordBeingParsed->setInvisible();
+                } else if (displayType == "ARMOR") {
+                    armorBeingParsed->setInvisible();
                 }
             }   
             bvisible = false;
-        } else if (bposX) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.ROOM) {
-                roomBeingParsed.setPosX(x);
-            } else if (displayType == DisplayType.PASSAGE) {
-                passageBeingParsed.setPosX(x);
-            } else if (displayType == DisplayType.MONSTER) {
-                monsterBeingParsed.setPosX(x);
-            } else if (displayType == DisplayType.PLAYER) {
-                playerBeingParsed.setPosX(x);
-            } else if (displayType == DisplayType.SCROLL) {
-                scrollBeingParsed.setPosX(x);
-            } else if (displayType == DisplayType.SWORD) {
-                swordBeingParsed.setPosX(x);
-            } else if (displayType == DisplayType.ARMOR) {
-                armorBeingParsed.setPosX(x);
+        } 
+        else if (bposX) {
+            int x = std::stoi(data);
+            if (displayType == "ROOM") {
+                roomBeingParsed->Displayable::SetPosX(x);
+            } else if (displayType == "PASSAGE") {
+                passageBeingParsed->Displayable::SetPosX(x);
+            } else if (displayType == "MONSTER") {
+                monsterBeingParsed->Displayable::SetPosX(x);
+            } else if (displayType == "PLAYER") {
+                playerBeingParsed->Displayable::SetPosX(x);
+            } else if (displayType == "SCROLL") {
+                scrollBeingParsed->Displayable::SetPosX(x);
+            } else if (displayType == "SWORD") {
+                swordBeingParsed->Displayable::SetPosX(x);
+            } else if (displayType == "ARMOR") {
+                armorBeingParsed->Displayable::SetPosX(x);
             }            
             bposX = false;
         } else if (bposY) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.ROOM) {
-                roomBeingParsed.setPosY(x);
-            } else if (displayType == DisplayType.PASSAGE) {
-                passageBeingParsed.setPosY(x);
-            } else if (displayType == DisplayType.MONSTER) {
-                monsterBeingParsed.setPosY(x);
-            } else if (displayType == DisplayType.PLAYER) {
-                playerBeingParsed.setPosY(x);
-            } else if (displayType == DisplayType.SCROLL) {
-                scrollBeingParsed.setPosY(x);
-            } else if (displayType == DisplayType.SWORD) {
-                swordBeingParsed.setPosY(x);
-            } else if (displayType == DisplayType.ARMOR) {
-                armorBeingParsed.setPosY(x);
+            int x = std::stoi(data);
+            if (displayType == "ROOM") {
+                roomBeingParsed->Displayable::setPosY(x);
+            } else if (displayType == "PASSAGE") {
+                passageBeingParsed->Displayable::setPosY(x);
+            } else if (displayType == "MONSTER") {
+                monsterBeingParsed->Displayable::setPosY(x);
+            } else if (displayType == "PLAYER") {
+                playerBeingParsed->Displayable::setPosY(x);
+            } else if (displayType == "SCROLL") {
+                scrollBeingParsed->Displayable::setPosY(x);
+            } else if (displayType == "SWORD") {
+                swordBeingParsed->Displayable::setPosY(x);
+            } else if (displayType == "ARMOR") {
+                armorBeingParsed->Displayable::setPosY(x);
             }                
             bposY = false;
         } else if (bwidth) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.ROOM) {
-                roomBeingParsed.setWidth(x);
-            } else if (displayType == DisplayType.PASSAGE) {
-                passageBeingParsed.setWidth(x);
+            int x = std::stoi(data);
+            if (displayType == "ROOM") {
+                roomBeingParsed->SetWidth(x);
+            } else if (displayType == "PASSAGE") {
+                passageBeingParsed->SetWidth(x);
             } 
             bwidth = false;
         } else if (bheight) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.ROOM) {
-                roomBeingParsed.setHeight(x);
-            } else if (displayType == DisplayType.PASSAGE) {
-                passageBeingParsed.setHeight(x);
+            int x = std::stoi(data);
+            if (displayType == "ROOM") {
+                roomBeingParsed->setHeight(x);
+            } else if (displayType == "PASSAGE") {
+                passageBeingParsed->setHeight(x);
             }
             bheight = false;
         } else if (btype) {
-            String type = (std::to_string(data));
+            std::string type = (data);
             char t = type[0];
-            monsterBeingParsed.setType(t);
+            monsterBeingParsed->setType(t);
             btype = false;
         } else if (bhp) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.MONSTER) {
-                monsterBeingParsed.setHp(x);
-            } else if (displayType == DisplayType.PLAYER) {
-                playerBeingParsed.setHp(x);
+            int x = std::stoi(data);
+            if (displayType == "MONSTER") {
+                monsterBeingParsed->setHp(x);
+            } else if (displayType == "PLAYER") {
+                playerBeingParsed->setHp(x);
             }
             bhp = false;
         } else if (bmaxhit) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.MONSTER) {
-                monsterBeingParsed.setMaxHit(x);
-            } else if (displayType == DisplayType.PLAYER) {
-                playerBeingParsed.setMaxHit(x);
+            int x = std::stoi(data);
+            if (displayType == "MONSTER") {
+                monsterBeingParsed->setMaxHit(x);
+            } else if (displayType == "PLAYER") {
+                playerBeingParsed->setMaxHit(x);
             }
             bmaxhit = false;
         } else if (bhpMoves) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.MONSTER) {
-                monsterBeingParsed.setHpMoves(x);
-            } else if (displayType == DisplayType.PLAYER) {
-                playerBeingParsed.setHpMoves(x);
+            int x = std::stoi(data);
+            if (displayType == "MONSTER") {
+                monsterBeingParsed->setHpMoves(x);
+            } else if (displayType == "PLAYER") {
+                playerBeingParsed->setHpMoves(x);
             }
             bhpMoves = false;
         } else if (bitemintval) {
-            int x = std::stoi(std::to_string(data));
-            if (displayType == DisplayType.SCROLL) {
-                scrollBeingParsed.setIntValue(x);
-            } else if (displayType == DisplayType.SWORD) {
-                swordBeingParsed.setIntValue(x);
-            } else if (displayType == DisplayType.ARMOR) {
-                armorBeingParsed.setIntValue(x);
+            int x = std::stoi(data);
+            if (displayType == "SCROLL") {
+                scrollBeingParsed->setIntValue(x);
+            } else if (displayType == "SWORD") {
+                swordBeingParsed->setIntValue(x);
+            } else if (displayType == "ARMOR") {
+                armorBeingParsed->setIntValue(x);
             }  
             bitemintval = false;
         } else if (bactionintval) {
-            int x = std::stoi(std::to_string(data));
-            actionBeingParsed.setIntValue(x);
+            int x = std::stoi(data);
+            actionBeingParsed->setIntValue(x);
             bactionintval = false;
         } else if (bactionmessage) {
-            String message = (std::to_string(data));
-            actionBeingParsed.setMessage(message);
+            std::string message = (data);
+            actionBeingParsed->setMessage(message);
             bactionmessage = false;
         } else if (bactioncharval) {
-            String foo = std::to_string(data);
+            std::string foo = data;
             char val = foo[0];
-            actionBeingParsed.setCharValue(val);
+            actionBeingParsed->setCharValue(val);
             bactioncharval = false;
         }
-    
-        if (qName.equalsIgnoreCase("Dungeon")) {
-            dungeonBeingparsed = null;
-            odgBeingParsed = null;
-        } else if (qName.equalsIgnoreCase("Rooms") || qName.equalsIgnoreCase("Passages")) {
-        } else if (qName.equalsIgnoreCase("Room")) {
-            dungeonBeingparsed.addRoom(roomBeingParsed);
-            roomBeingParsed = null;
-            displayType = null;
-        } else if (qName.equalsIgnoreCase("Passage")) {
-            dungeonBeingparsed.addPassage(passageBeingParsed);
-            passageBeingParsed = null;
-            displayType = null;
-        } else if (qName.equalsIgnoreCase("Monster")) {
-            roomBeingParsed.setCreature(monsterBeingParsed);
-            dungeonBeingparsed.addCreature(monsterBeingParsed);
-            monsterBeingParsed = null;
-            displayType = null;
-        } else if (qName.equalsIgnoreCase("Player")) {
-            roomBeingParsed.setCreature(playerBeingParsed);
-            dungeonBeingparsed.addCreature(playerBeingParsed);
-            playerBeingParsed = null;
-            displayType = null;           
+        if (case_insensitive_match(qNameStr, "Dungeon")) {
+            dungeonBeingparsed = NULL;
+            odgBeingParsed = NULL;
+        } else if (case_insensitive_match(qNameStr, "Rooms") || case_insensitive_match(qNameStr, "Passages")) {
+        } else if (case_insensitive_match(qNameStr, "Room")) {
+            dungeonBeingparsed->addRoom(roomBeingParsed);
+            roomBeingParsed = NULL;
+            displayType.clear();
+        } else if (case_insensitive_match(qNameStr, "Room")) {
+            dungeonBeingparsed->addPassage(passageBeingParsed);
+            passageBeingParsed = NULL;
+            displayType.clear();
+        } else if (case_insensitive_match(qNameStr, "Monster")) {
+            roomBeingParsed->setCreature(monsterBeingParsed);
+            dungeonBeingparsed->addCreature(monsterBeingParsed);
+            monsterBeingParsed = NULL;
+            displayType.clear();
+        } else if (case_insensitive_match(qNameStr, "Player")) {
+            roomBeingParsed->setCreature(playerBeingParsed);
+            dungeonBeingparsed->addCreature(playerBeingParsed);
+            playerBeingParsed = NULL;
+            displayType.clear();
             inPlayer = false; 
         } 
-        else if (qName.equalsIgnoreCase("Scroll")) {
+        else if (case_insensitive_match(qNameStr, "Scroll")) {
             if (inPlayer) {
-                scrollBeingParsed.setOwner(playerBeingParsed);
+                scrollBeingParsed->setOwner(playerBeingParsed);
             }
-            dungeonBeingparsed.addItem(scrollBeingParsed);
-            scrollBeingParsed = null;
-            displayType = null;
-        } else if (qName.equalsIgnoreCase("Sword")) {
+            dungeonBeingparsed->addItem(scrollBeingParsed);
+            scrollBeingParsed = NULL;
+            displayType.clear();
+        } else if (case_insensitive_match(qNameStr, "Sword")) {
             if (inPlayer) {
-                swordBeingParsed.setOwner(playerBeingParsed);
-                playerBeingParsed.setWeapon(swordBeingParsed);
+                swordBeingParsed->setOwner(playerBeingParsed);
+                playerBeingParsed->setWeapon(swordBeingParsed);
             }
-            dungeonBeingparsed.addItem(swordBeingParsed);
-            swordBeingParsed = null;
-            displayType = null;
-        } else if (qName.equalsIgnoreCase("Armor")) {
+            dungeonBeingparsed->addItem(swordBeingParsed);
+            swordBeingParsed = NULL;
+            displayType.clear();
+        } else if (case_insensitive_match(qNameStr, "Armor")) {
             if (inPlayer) {
-                armorBeingParsed.setOwner(playerBeingParsed);
-                playerBeingParsed.setWeapon(armorBeingParsed);
+                armorBeingParsed->setOwner(playerBeingParsed);
+                playerBeingParsed->setWeapon(armorBeingParsed);
             }
-            dungeonBeingparsed.addItem(armorBeingParsed);
-            armorBeingParsed = null;
-            displayType = null;
-        } else if (qName.equalsIgnoreCase("CreatureAction") || qName.equalsIgnoreCase("ItemAction")) {
-            actionBeingParsed = null;
+            dungeonBeingparsed->addItem(armorBeingParsed);
+            armorBeingParsed = NULL;
+            displayType.clear();
+        } else if (case_insensitive_match(qNameStr, "CreatureAction") || case_insensitive_match(qNameStr, "ItemAction")) {
+            actionBeingParsed = NULL;
         }
     }

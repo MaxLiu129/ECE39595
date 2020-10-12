@@ -14,7 +14,6 @@
 #include "Creature.hpp"
 class EndGame: public CreatureAction {
 public:
-    typedef Creature super;
     EndGame(std::string _name, Creature* owner);
 private:
     std::string name;

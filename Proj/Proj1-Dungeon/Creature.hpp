@@ -1,9 +1,12 @@
 #ifndef CREATURE_H_
 #define CREATURE_H_
 
+
+class CreatureAction;
 #include <string>
 #include "Displayable.hpp"
 #include "CreatureAction.hpp"
+
 
 class Creature: public Displayable {
 public:

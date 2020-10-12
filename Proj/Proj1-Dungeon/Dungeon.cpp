@@ -14,7 +14,7 @@ void Dungeon::getDungeon(std::string _name, int _width, int _gameHeight) {
     name = _name;
     width = _width;
     gameHeight = _gameHeight;
-    std::cout << "Dungeon setting:" + _name + " " + std::to_string(_width) + " " +  std::to_string(_gameHeight);
+    std::cout << "Dungeon setting:" + _name + " " + std::to_string(_width) + " " +  std::to_string(_gameHeight) << std::endl;
 }
 
 void Dungeon::addRoom(Room* room) {

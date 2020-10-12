@@ -13,7 +13,6 @@
 #include "Creature.hpp"
 class Remove: public CreatureAction {
 public:
-    typedef Creature super;
     Remove(std::string _name, Creature* owner);
     
 private:

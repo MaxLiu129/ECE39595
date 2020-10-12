@@ -11,12 +11,12 @@
 
 Scroll::Scroll(std::string _name) {
     name = _name;
-    std::cout << "Scroll constructed";
+    std::cout << "Scroll constructed" << std::endl;
 }
 
 void Scroll::setID(int _room, int _serial) {
     room = _room;
     serial = _serial;
-    std::cout << "Scroll ID set";
+    std::cout << "Scroll ID set" << std::endl;
 
 }

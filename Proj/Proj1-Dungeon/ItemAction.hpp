@@ -9,6 +9,7 @@
 #ifndef ItemAction_hpp
 #define ItemAction_hpp
 
+class Item;
 #include <stdio.h>
 #include "Action.hpp"
 #include "Item.hpp"

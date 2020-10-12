@@ -9,6 +9,6 @@
 #include "BlessCurseOwner.hpp"
 #include <iostream>
 
-BlessCurseOwner::BlessCurseOwner(Creature* owner) {
+BlessCurseOwner::BlessCurseOwner(Item* owner):ItemAction(owner) {
     std::cout << "Bless Curse Owner constructed" << std::endl;
 }

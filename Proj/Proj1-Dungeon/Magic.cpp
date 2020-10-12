@@ -10,5 +10,5 @@
 #include <iostream>
 
 Magic::Magic() {
-    std::cout << "magic added";
+    std::cout << "magic added" << std::endl;
 }

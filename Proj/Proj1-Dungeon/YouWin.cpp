@@ -12,5 +12,5 @@
 YouWin::YouWin(std::string _name, Creature *owner):CreatureAction(Creature *owner) {
 
     name = _name;
-    std::cout << "You win the game" + _name;
+    std::cout << "You win the game" + _name << std::endl;
 }
