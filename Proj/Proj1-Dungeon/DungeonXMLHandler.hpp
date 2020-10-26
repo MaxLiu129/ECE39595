@@ -47,16 +47,6 @@ class DungeonXMLHandler : public xercesc::DefaultHandler{
         std::string CLASSID = "DungeonXMLHandler";
         std::string data ;
 
-        /*DisplayType displayType;*/
-        std::string displayType;
-        //const DisplayType ROOM;
-        //const DisplayType PASSAGE;
-        //const DisplayType MONSTER;
-        //const DisplayType PLAYER;
-        //const DisplayType SCROLL;
-        //const DisplayType SWORD;
-        //const DisplayType ARMOR;
-
         Dungeon* dungeonBeingparsed = NULL;
         ObjectDisplayGrid* odgBeingParsed = NULL;
         Room* roomBeingParsed = NULL;
@@ -87,7 +77,7 @@ class DungeonXMLHandler : public xercesc::DefaultHandler{
         void startElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName, const xercesc::Attributes& attributes);
         void endElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName) ;
         void fatalError(const xercesc::SAXParseException&);
-        void characters(const XMLCh * const ch, const XMLSize_t length) ;
+        void characters(const XMLCh * const ch, const XMLSize_t length);
         std::string toString();
         DungeonXMLHandler();
 

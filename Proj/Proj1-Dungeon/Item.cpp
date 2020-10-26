@@ -9,7 +9,7 @@
 #include "Item.hpp"
 #include <iostream>
 
-void Item::setOwner(Creature* owner) {
+void Item::setOwner(Creature* _owner) {
     //owner =_owner;
     std::cout << "owner set" << std::endl;
 }

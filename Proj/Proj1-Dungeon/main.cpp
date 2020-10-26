@@ -1,21 +1,18 @@
 #include <iostream>
 #include <string>
-//
-//#include <xercesc/sax2/SAX2XMLReader.hpp>
-//#include <xercesc/sax2/XMLReaderFactory.hpp>
-//#include <xercesc/sax2/DefaultHandler.hpp>
-//#include <xercesc/util/XMLString.hpp>
-//#include <xercesc/sax2/Attributes.hpp>
-//#include <xercesc/util/XMLUni.hpp>
-//#include <xercesc/util/PlatformUtils.hpp>
-
+#include <xercesc/sax2/SAX2XMLReader.hpp>
+#include <xercesc/sax2/XMLReaderFactory.hpp>
+#include <xercesc/sax2/DefaultHandler.hpp>
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/util/XMLUni.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
 #include "DungeonXMLHandler.hpp"
 #include <exception>
 
 
 int main(int argc, char* argv[]) {
 
-    std::string fileName;
+    std::string fileName = "./xmlFiles/wear.xml";
     try{
         xercesc::XMLPlatformUtils::Initialize();
     }
@@ -27,13 +24,13 @@ int main(int argc, char* argv[]) {
         xercesc::XMLString::release(&message);
         return 1;
     }
-    switch (argc) {
-        case 2:
-            fileName = "./xmlfiles/" + ((std::string) argv[1]);
-            break;
-        default:
-            std::cout << "C++ Test <xmlfilename>" << std::endl;
-    }
+    //switch (argc) {
+    //    case 2:
+    //        filename = "./xmlfiles/" + ((std::string) argv[1]);
+    //        break;
+    //    default:
+    //        std::cout << "c++ test <xmlfilename>" << std::endl;
+    //}
     xercesc::SAX2XMLReader* parser = xercesc::XMLReaderFactory::createXMLReader();
 
     try {

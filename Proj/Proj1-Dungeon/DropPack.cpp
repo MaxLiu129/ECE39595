@@ -11,5 +11,5 @@
 
 DropPack::DropPack(std::string _name, Creature* owner): CreatureAction(owner) {
     name = _name;
-    std::cout << "DropPack" << std::endl;
+    std::cout << "DropPack, its name is " + _name << std::endl;
 }

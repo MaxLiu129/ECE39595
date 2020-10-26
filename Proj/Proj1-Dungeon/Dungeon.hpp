@@ -28,10 +28,7 @@ private:
     std::string name;
     int width;
     int gameHeight;
-    int roomCount = 0;
-    int creatureCount = 0;
-    int passageCount = 0;
-    int itemCount = 0;
+
     std::vector<Room *> rooms;
     std::vector<Creature *> creatures;
     std::vector<Passage *> passages;

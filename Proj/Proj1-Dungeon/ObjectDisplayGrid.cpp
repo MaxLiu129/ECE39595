@@ -16,20 +16,21 @@
 //#include <xercesc/util/PlatformUtils.hpp>
 #include <stdio.h>
 #include <iostream>
+#include <string>
 
 void ObjectDisplayGrid::getObjectDisplayGrid(int _gameHeight, int _width, int _topHeight) {
     gameHeight = _gameHeight;
     width = _width;
     topHeight = _topHeight;
-    std::cout << "Object Display Grid get" << std::endl;
+    std::cout << "Object Display Grid get, gameHeight is " + std::to_string(_gameHeight) + " width is " + std::to_string(_width) + " topHieght is " + std::to_string(_topHeight) << std::endl;
 }
 
 void ObjectDisplayGrid::setTopMessageHeight(int _topHeight) {
     topHeight = _topHeight;
-    std::cout << "Top message height set" << std::endl;
+    std::cout << "Top message height set, it is " + std::to_string(_topHeight) << std::endl;
 }
 
 void ObjectDisplayGrid::setBotHeight(int _bottomHeight) {
     bottomHeight = _bottomHeight;
-    std::cout << "Bottom Height set";
+    std::cout << "Bottom Height set, it is " + std::to_string(_bottomHeight) << std::endl;
 }

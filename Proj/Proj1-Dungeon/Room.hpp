@@ -10,8 +10,7 @@ class Room: public Structure{
     private:
         int room;
     public:
-        Room();
-        void setId(int _room); 
+        Room(int _room);
         void setCreature(Creature* _monster);
 };
 

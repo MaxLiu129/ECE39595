@@ -24,5 +24,5 @@ void Creature::setDeathAction(CreatureAction* da){
 
 void Creature::setHitAction(CreatureAction* ha){
     hitAction = ha;
-    std::cout << "Creature::setHitAction(CreatureAction ha) called, room is set to " << std::endl;
+    std::cout << "Creature::setHitAction(CreatureAction ha) called" << std::endl;
 }

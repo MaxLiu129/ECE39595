@@ -14,26 +14,26 @@ void Dungeon::getDungeon(std::string _name, int _width, int _gameHeight) {
     name = _name;
     width = _width;
     gameHeight = _gameHeight;
-    std::cout << "Dungeon setting:" + _name + " " + std::to_string(_width) + " " +  std::to_string(_gameHeight) << std::endl;
+    std::cout << "Dungeon setting: name is: " + _name + " width is: " + std::to_string(_width) + "gameHeight is: " +  std::to_string(_gameHeight) << std::endl;
 }
 
 void Dungeon::addRoom(Room* room) {
-    rooms[roomCount++] = room;
+    rooms.push_back(room);
     std::cout << "Dungeon: new room added" << std::endl;
 }
 
 void Dungeon::addCreature(Creature* creature) {
-    creatures[creatureCount++] = creature;
+    creatures.push_back(creature);
     std::cout << "Dungeon: new creature added" << std::endl;
 }
 
 void Dungeon::addPassage(Passage* passage) {
-    passages[passageCount++] = passage;
+    passages.push_back(passage);
     std::cout << "Dungeon: new passag added" << std::endl;
 }
 
 void Dungeon::addItem(Item* item) {
-    items[itemCount++] = item;
+    items.push_back(item);
     std::cout << "Dungeon: new item added" << std::endl;
 }
 

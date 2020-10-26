@@ -2,17 +2,12 @@
 
 #include <string>
 
-Room::Room(){
-    std::cout << "Room::Room(std::string _roomName) called." << std::endl;
-}
-
-void Room::setId(int _room){
+Room::Room(int _room){
     room = _room;
-    std::cout << "Room::setId(int _room) called" << std::endl;
+    std::cout << "Room constructor, room id set to" + std::to_string(_room) << std::endl;
 }
-
 
 void Room::setCreature(Creature* _monster){
     //creatures[creatureCount++] = _monster;
-    std::cout << "setCreature(Creature Monster) called." << std::endl;
+    std::cout << "set creature in room" << std::endl;
 }   

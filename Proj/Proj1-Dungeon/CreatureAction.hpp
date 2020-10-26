@@ -6,8 +6,8 @@
 //  Copyright © 2020 zihan liu. All rights reserved.
 //
 
-class Creature;
 #ifndef CreatureAction_hpp
+class Creature;
 #define CreatureAction_hpp
 #include "Action.hpp"
 #include <stdio.h>

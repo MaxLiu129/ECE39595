@@ -17,6 +17,7 @@ class Player: public Creature {
 public:
     void setWeapon(Item *sword);
     void setArmor(Item *armor);
+private:
     Item* sword = NULL;
     Item* armor = NULL;
 };

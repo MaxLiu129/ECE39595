@@ -11,5 +11,5 @@
 
 ChangeDisplayedType::ChangeDisplayedType(std::string _name, Creature* owner):CreatureAction(owner) {
     name = _name;
-    std::cout << "ChangeDisplayedType" << std::endl;
+    std::cout << "ChangeDisplayedType, name is \"" + _name + "\"" << std::endl;
 }

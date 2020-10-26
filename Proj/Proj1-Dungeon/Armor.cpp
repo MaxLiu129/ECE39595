@@ -15,12 +15,12 @@ Armor::Armor() {
 }
 void Armor::setName(std::string _name) {
     name = _name;
-    std::cout << "set name for Armor" << std::endl;
+    std::cout << "set name for Armor, name is \"" + _name + "\"" << std::endl;
 
 }
 void Armor::setID(int _room, int _serial) {
     room = _room;
     serial = _serial;
-    std::cout << "Set ID for Armor" << std::endl;
+    std::cout << "Set ID for Armor, room num is " + std::to_string(_room) + " serial is " + std::to_string(_serial) << std::endl;
 
 }

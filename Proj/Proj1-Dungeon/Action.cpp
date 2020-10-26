@@ -11,15 +11,15 @@
 
 void Action::setMessage(std::string _msg) {
     msg = _msg;
-    std::cout << "setMessage" << std::endl;
+    std::cout << "setMessage is \"" + (_msg) + "\""  << std::endl;
 }
 
 void Action::setIntValue(int _v) {
     v = _v;
-    std::cout << "setIntValue" << std::endl;
+    std::cout << "setIntValue is " + std::to_string(_v) << std::endl;
 }
 
 void Action::setCharValue(char _c) {
     c = _c;
-    std::cout << "setCharValue" << std::endl;
+    std::cout << "setCharValue is: " + std::to_string(_c)<< std::endl;
 }

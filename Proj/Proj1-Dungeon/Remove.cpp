@@ -11,5 +11,5 @@
 
 Remove::Remove(std::string _name, Creature* owner):CreatureAction(owner) {
     name = _name;
-    std::cout << "Removed name" + _name << std::endl;
+    std::cout << "Removed name, it is \"" + _name + "\""<< std::endl;
 }
