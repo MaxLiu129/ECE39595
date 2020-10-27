@@ -1,9 +1,9 @@
 #include <atomic> 
 #include <thread>
 #include <sstream>
-#include "ObjectDisplayGrid.h"
+#include "ObjectDisplayGrid.hpp"
 #include "GridChar.h"
-#include "KeyboardListener.h"
+#include "KeyboardListener.hpp"
 
 #include <iostream>
 #include <string>
@@ -93,32 +93,32 @@ int main(int argc, char* argv[]){
         xercesc::XMLString::release(&fileNameXMLEnc);
         //parser->parse(new File(filename), handler);
         
-        //start to deal with gird and movement.
-            //run step 1's main to get xml information.
+        ////start to deal with gird and movement.
+        //    //run step 1's main to get xml information.
 
-        // create an initialize the object display grid
-        int WIDTH, HEIGHT, MESSAGES;
-        //update the dimension of the dungeon.
-        WIDTH = handler -> getWidth();
-        HEIGHT = handler -> getHEIGHT();
-        MESSAGES = handler -> getMESSAGES();
+        //// create an initialize the object display grid
+        //int WIDTH, HEIGHT, MESSAGES;
+        ////update the dimension of the dungeon.
+        //WIDTH = handler -> getWidth();
+        //HEIGHT = handler -> getHEIGHT();
+        //MESSAGES = handler -> getMESSAGES();
 
-        ObjectDisplayGrid grid(WIDTH, HEIGHT, MESSAGES);
-        ObjectDisplayGrid* pGrid = &grid;
+        //ObjectDisplayGrid grid(WIDTH, HEIGHT, MESSAGES);
+        //ObjectDisplayGrid* pGrid = &grid;
 
-        // thread to wait for key press
-        KeyboardListener listener(pGrid);
-        std::thread keyboardThread(&KeyboardListener::run, &listener);
+        //// thread to wait for key press
+        //KeyboardListener listener(pGrid);
+        //std::thread keyboardThread(&KeyboardListener::run, &listener);
 
-        // thread to update display
-        std::thread displayThread(runDisplay, pGrid);
+        //// thread to update display
+        //std::thread displayThread(runDisplay, pGrid);
 
-        // wait for the keyboard thread to finish, then notify the display to stop
-        keyboardThread.join();
-        isRunning = false;
+        //// wait for the keyboard thread to finish, then notify the display to stop
+        //keyboardThread.join();
+        //isRunning = false;
 
-        // wait for the display thread to finish
-        displayThread.join();
+        //// wait for the display thread to finish
+        //displayThread.join();
         
 		delete parser;
 		delete handler;

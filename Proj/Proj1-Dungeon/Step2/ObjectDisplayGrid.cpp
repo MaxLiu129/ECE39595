@@ -1,5 +1,7 @@
 #include <curses.h>
-#include "ObjectDisplayGrid.h"
+#include "ObjectDisplayGrid.hpp"
+#include <string>
+#include <iostream>
 #ifdef _WIN32
 	#include <windows.h>
 #endif
@@ -99,6 +101,6 @@ void ObjectDisplayGrid::setBotHeight(int _bottomHeight) {
     std::cout << "Bottom Height set, it is " + std::to_string(_bottomHeight) << std::endl;
 }
 
-void ObjectDisplayGrid::getWidth(){return width;}
-void ObjectDisplayGrid::getHeight(){return height;}
-void ObjectDisplayGrid::getMessages(){return message;}
+//void ObjectDisplayGrid::getWidth(){return width;}
+//void ObjectDisplayGrid::getHeight(){return height;}
+//void ObjectDisplayGrid::getMessages(){return message;}

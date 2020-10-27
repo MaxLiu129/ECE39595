@@ -1,6 +1,21 @@
 #include "DungeonXMLHandler.hpp"
 #include <iostream> 
 #include <sstream>
+
+void DungeonXMLHandler::addRoom(Room room){
+    rooms[roomCount++] = room;
+}
+
+void DungeonXMLHandler::addPassage(Passage passage){
+    passages[passageCount++] = passage;
+}
+
+void DungeonXMLHandler::addMonster(Monster monster){
+    monsters[monsterCount++] = monster;
+}
+
+//void... like above. (after step2)
+
 int case_insensitive_match(std::string s1, std::string s2) {
     //convert s1 and s2 into lower case strings
     std::transform(s1.begin(), s1.end(), s1.begin(), ::tolower); //std overloads tolower, ::tolower is the definition in the global namespace
@@ -64,9 +79,11 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
         else if(case_insensitive_match(qNameStr, "Rooms")){}
         else if(case_insensitive_match(qNameStr, "Room")){
             int id = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
-            roomBeingParsed = new Room(id);
-            //roomBeingParsed->Room(id);
-
+            //roomBeingParsed = new Room(id); //what we had on step 1.
+            //new for step 2.
+            Room room = Room(id);
+            addRoom(room);
+            roomBeingParsed = &rooms[roomCount-1];
         }
         else if(case_insensitive_match(qNameStr, "Passages")){}
         else if(case_insensitive_match(qNameStr, "Passage")){
