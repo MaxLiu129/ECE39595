@@ -18,6 +18,7 @@ void Dungeon::getDungeon(std::string _name, int _width, int _gameHeight) {
 }
 
 void Dungeon::addRoom(Room* room) {
+
     rooms.push_back(room);
     std::cout << "Dungeon: new room added" << std::endl;
 }
@@ -35,5 +36,50 @@ void Dungeon::addPassage(Passage* passage) {
 void Dungeon::addItem(Item* item) {
     items.push_back(item);
     std::cout << "Dungeon: new item added" << std::endl;
+}
+
+std::string Dungeon::getDungeonName() {
+    return name;
+}
+int Dungeon::getDungeonWidth() {
+    return width;
+}
+int Dungeon::getDungeonHeight() {
+    return gameHeight;
+
+}
+std::vector<Room*> Dungeon::getRooms() {
+    return rooms;
+}
+std::vector<Passage*> Dungeon::getPassages() {
+    return passages;
+}
+std::vector<Creature*> Dungeon::getCreatures() {
+    return creatures;
+}
+std::vector<Item*> Dungeon::getItems() {
+    return items;
+}
+
+//check position
+
+bool Dungeon::checkPos(int _x, int _y) {
+    for (Room* room : rooms) {
+        if (room -> checkRoomPos(_x, _y)) {
+            return true;
+        }
+    }
+    for (Passage* passage : passages) {
+        for (int i = 1; i < passage->getPassagePosXs().size(); i++) {
+            int posX1 = (passage->getPassagePosXs())[i - 1];
+            int posX2 = (passage->getPassagePosXs())[i];
+            int posY1 = (passage->getPassagePosYs())[i - 1];
+            int posY2 = (passage->getPassagePosYs())[i];
+            if (passage->checkPassagePos(_x, _y, posX1, posX2, posY1, posY2)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 

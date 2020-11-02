@@ -26,3 +26,18 @@ void Creature::setHitAction(CreatureAction* ha){
     hitAction = ha;
     std::cout << "Creature::setHitAction(CreatureAction ha) called" << std::endl;
 }
+
+void Creature::setName(std::string _name) {
+    name = _name;
+}
+void Creature::setID(int _room, int _serial) {
+    room = _room;
+    serial = _serial;
+}
+std::string Creature::getName() {
+    return name;
+}
+int Creature::getCreatureHp() {
+    return h;
+}
+

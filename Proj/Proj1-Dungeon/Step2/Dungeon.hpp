@@ -23,11 +23,23 @@ public:
     void addCreature(Creature* creature);
     void addPassage(Passage* passage);
     void addItem(Item* item);
+    std::string getDungeonName();
+    int getDungeonWidth();
+    int getDungeonHeight();
+    //int getDungeonMessage();
+
+    bool checkPos(int _x, int _y);
+
+    //void setCurrRoom(PosX)
+    std::vector<Room*> getRooms();
+    std::vector<Passage*> getPassages();
+    std::vector<Creature*> getCreatures();
+    std::vector<Item*> getItems();
     
 private:
     std::string name;
     int width;
-    int gameHeight;
+    int gameHeight;    
 
     std::vector<Room *> rooms;
     std::vector<Creature *> creatures;
@@ -35,8 +47,4 @@ private:
     std::vector<Item *> items;
         
 };
-
-
-
-
 #endif /* Dungeon_hpp */

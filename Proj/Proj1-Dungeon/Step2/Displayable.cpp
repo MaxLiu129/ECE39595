@@ -65,4 +65,15 @@ void Displayable::setHeight(int _heiy) {
     std::cout << "setHeight(int _y), HeightY is " + std::to_string(_heiy) << std::endl;
 }
 
-
+int Displayable::getPosX() {
+    return PosX;
+}
+int Displayable::getPosY() {
+    return PosY;
+}
+int Displayable::getWidth() {
+    return WidthX;
+}
+int Displayable::getHeight() {
+    return HeightY;
+}

@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectDisplayGrid.hpp"
+#include "Dungeon.hpp"
 
 class KeyboardListener {
 private:
@@ -19,6 +20,6 @@ public:
     /**
      * Runs the keyboard listener in a thread
      */
-    void run();
+    void run(Dungeon* dungeon, ObjectDisplayGrid* objectGrid);
 };
 

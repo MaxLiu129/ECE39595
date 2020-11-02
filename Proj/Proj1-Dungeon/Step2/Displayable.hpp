@@ -2,7 +2,7 @@
 #define DISPLAYABLE_H_
 
 #include <string>
-
+#include <vector>
 
 class Displayable{
 
@@ -15,10 +15,15 @@ public:
     void setHp(int _Hp);
     void setType(char _t);
     void setIntValue(int _v);
-    void SetPosX(int _posx);
-    void setPosY(int _posy);
+    virtual void SetPosX(int _posx);
+    virtual void setPosY(int _posy);
     void SetWidth(int _widx);
     void setHeight(int _heiy);
+
+    int getPosX();
+    int getPosY();
+    int getWidth();
+    int getHeight();
 
 private:
     int maxHit;

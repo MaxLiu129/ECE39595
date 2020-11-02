@@ -18,3 +18,18 @@ void Player::setArmor(Item* _armor) {
     armor = _armor;
     std::cout << "set armor" << std::endl;
 }
+
+//void Player::setID(int _room, int _serial) {
+//    room = _room;
+//    serial = _serial;
+//    std::cout << "ID set for the Player, room is " + std::to_string(_room) + "serial is: " + std::to_string(_serial) << std::endl;
+//}
+//
+//void Player::setName(std::string _name) {
+//    name = _name;
+//    std::cout << "set name for the Player, name is: \"" + _name + "\"" << std::endl;
+//}
+//
+//std::string Player::getPlayerName() {
+//    return name;
+//}

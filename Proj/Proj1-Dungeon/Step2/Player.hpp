@@ -17,9 +17,16 @@ class Player: public Creature {
 public:
     void setWeapon(Item *sword);
     void setArmor(Item *armor);
+    //void setName(std::string _name);
+    //void setID(int _room, int _serial);
+    //std::string getPlayerName();
+
 private:
     Item* sword = NULL;
     Item* armor = NULL;
+    //std::string name;
+    //int room;
+    //int serial;
 };
 
 #endif /* Player_hpp */

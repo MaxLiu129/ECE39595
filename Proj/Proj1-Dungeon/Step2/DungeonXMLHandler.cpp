@@ -1,21 +1,6 @@
 #include "DungeonXMLHandler.hpp"
 #include <iostream> 
 #include <sstream>
-
-void DungeonXMLHandler::addRoom(Room room){
-    rooms[roomCount++] = room;
-}
-
-void DungeonXMLHandler::addPassage(Passage passage){
-    passages[passageCount++] = passage;
-}
-
-void DungeonXMLHandler::addMonster(Monster monster){
-    monsters[monsterCount++] = monster;
-}
-
-//void... like above. (after step2)
-
 int case_insensitive_match(std::string s1, std::string s2) {
     //convert s1 and s2 into lower case strings
     std::transform(s1.begin(), s1.end(), s1.begin(), ::tolower); //std overloads tolower, ::tolower is the definition in the global namespace
@@ -56,6 +41,15 @@ DungeonXMLHandler::DungeonXMLHandler() {
 
 }
 
+Dungeon* DungeonXMLHandler::getDungeon() {
+    return dungeonBeingparsed;
+}
+
+ObjectDisplayGrid* DungeonXMLHandler::getOdg() {
+    return odg;
+}
+
+
 void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName, const xercesc::Attributes& attributes){
 
         char * qNameStr = xercesc::XMLString::transcode(qName);
@@ -64,26 +58,29 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
         }
         if (case_insensitive_match(qNameStr, "Dungeon")){
             dungeonBeingparsed = new Dungeon();      //dbp = Dungeon Being Parsed
-            odgBeingParsed = new ObjectDisplayGrid();   //obp = odg Being Parsed
+
 
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes,"name"));
             int width = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"width")));
             int gameHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"gameHeight")));
             int topHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"topHeight")));
             int bottomHeight = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"bottomHeight")));
-
+            odgBeingParsed = new ObjectDisplayGrid(width, gameHeight, topHeight);   //obp = odg Being Parsed
             dungeonBeingparsed->getDungeon(name, width, gameHeight);
             odgBeingParsed->getObjectDisplayGrid(gameHeight, width, topHeight);
             odgBeingParsed->setBotHeight(bottomHeight);
+
+            odg = new ObjectDisplayGrid(width, gameHeight, topHeight);
+            odg->getObjectDisplayGrid(gameHeight, width, topHeight);
+            odg->setBotHeight(bottomHeight);
         }
         else if(case_insensitive_match(qNameStr, "Rooms")){}
         else if(case_insensitive_match(qNameStr, "Room")){
             int id = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
-            //roomBeingParsed = new Room(id); //what we had on step 1.
-            //new for step 2.
-            Room room = Room(id);
-            addRoom(room);
-            roomBeingParsed = &rooms[roomCount-1];
+            roomBeingParsed = new Room(id);
+
+            //new_room = new Room(id);
+
         }
         else if(case_insensitive_match(qNameStr, "Passages")){}
         else if(case_insensitive_match(qNameStr, "Passage")){
@@ -98,16 +95,16 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
             int room = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
             int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
-            monsterBeingParsed->setID(room, serial);
-            monsterBeingParsed->setName(name);
+            monsterBeingParsed->Creature::setID(room, serial);
+            monsterBeingParsed->Creature::setName(name);
         }
         else if(case_insensitive_match(qNameStr, "Player")){
             playerBeingParsed = new Player();
-            //std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
-            //int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
-            //int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
-            //playerBeingParsed->setID(room, serial);
-            //playerBeingParsed->setName(name);
+            std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
+            int room = std::stoi(getXMLChAttributeFromString(attributes, "room"));
+            int serial = std::stoi(getXMLChAttributeFromString(attributes, "serial"));
+            playerBeingParsed->Creature::setID(room, serial);
+            playerBeingParsed->Creature::setName(name);
             inPlayer = true;
         }
         else if(case_insensitive_match(qNameStr, "Scroll")){
@@ -115,7 +112,8 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
             int room = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room")));
             int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
             scrollBeingParsed = new Scroll(name);
-            scrollBeingParsed->setID(room, serial);
+            scrollBeingParsed->Item::setID(room, serial);
+            scrollBeingParsed->Item::setName(name);
         }
         else if(case_insensitive_match(qNameStr, "Sword")){
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
@@ -123,6 +121,7 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
             int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
             swordBeingParsed = new Sword(name);
             swordBeingParsed->setID(room, serial);
+            swordBeingParsed->Item::setName(name);
         }
         else if(case_insensitive_match(qNameStr, "Armor")){
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
@@ -130,21 +129,33 @@ void DungeonXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, c
             int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
             armorBeingParsed = new Armor();
             armorBeingParsed->setID(room, serial);
+            armorBeingParsed->Item::setName(name);
         }
         else if (case_insensitive_match(qNameStr, "CreatureAction") || case_insensitive_match(qNameStr, "ItemAction")) {
             //this gonna be long
-            Creature* temp_owner;
+            Creature* temp_owner = NULL;
+            Item* item_owner = NULL;
             if (playerBeingParsed != NULL) {
                 temp_owner = playerBeingParsed;
+                actionBeingParsed = new CreatureAction(temp_owner);
             }
             else if (monsterBeingParsed != NULL){
                 temp_owner = monsterBeingParsed;
+                actionBeingParsed = new CreatureAction(temp_owner);
             }
             else {
-                std::cout << "Error: neither player or monster not being parsed" << std::endl;
-                exit(1);
+                if (scrollBeingParsed != NULL) {
+                    item_owner = scrollBeingParsed;
+
+                }
+                else if (swordBeingParsed != NULL) {
+                    item_owner = swordBeingParsed;
+                }
+                else {
+                    item_owner = armorBeingParsed;
+                }
+                actionBeingParsed = new ItemAction(item_owner);
             }
-            actionBeingParsed = new CreatureAction(temp_owner);
 
             std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
             std::string type = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
@@ -268,38 +279,40 @@ void DungeonXMLHandler::endElement(const XMLCh* uri, const XMLCh* localName, con
         } 
         else if (bposX) {
             int x = std::stoi(data);
-            if (roomBeingParsed != NULL) {
+            if (roomBeingParsed != NULL && monsterBeingParsed == NULL && playerBeingParsed == NULL && scrollBeingParsed == NULL && swordBeingParsed == NULL && armorBeingParsed == NULL) {
                 roomBeingParsed->Displayable::SetPosX(x);
             } else if (passageBeingParsed != NULL) {
                 passageBeingParsed->Displayable::SetPosX(x);
+                passageBeingParsed->addPosX(x);
             } else if (monsterBeingParsed != NULL) {
-                monsterBeingParsed->Displayable::SetPosX(x);
-            } else if (playerBeingParsed != NULL) {
-                playerBeingParsed->Displayable::SetPosX(x);
+                monsterBeingParsed->Displayable::SetPosX(x + roomBeingParsed->getPosX());
+            } else if (playerBeingParsed != NULL && swordBeingParsed == NULL && armorBeingParsed == NULL) {
+                playerBeingParsed->Displayable::SetPosX(x + roomBeingParsed->getPosX());
             } else if (scrollBeingParsed != NULL) {
-                scrollBeingParsed->Displayable::SetPosX(x);
+                scrollBeingParsed->Displayable::SetPosX(x + roomBeingParsed->getPosX());
             } else if (swordBeingParsed != NULL) {
-                swordBeingParsed->Displayable::SetPosX(x);
+                swordBeingParsed->Displayable::SetPosX(x + roomBeingParsed->getPosX());
             } else if (armorBeingParsed != NULL) {
-                armorBeingParsed->Displayable::SetPosX(x);
+                armorBeingParsed->Displayable::SetPosX(x + roomBeingParsed->getPosX());
             }            
             bposX = false;
         } else if (bposY) {
             int x = std::stoi(data);
-            if (roomBeingParsed != NULL) {
+            if (roomBeingParsed != NULL && monsterBeingParsed == NULL && playerBeingParsed == NULL && scrollBeingParsed == NULL && swordBeingParsed == NULL && armorBeingParsed == NULL) {
                 roomBeingParsed->Displayable::setPosY(x);
             } else if (passageBeingParsed != NULL) {
                 passageBeingParsed->Displayable::setPosY(x);
+                passageBeingParsed->addPosY(x);
             } else if (monsterBeingParsed != NULL) {
-                monsterBeingParsed->Displayable::setPosY(x);
+                monsterBeingParsed->Displayable::setPosY(x + roomBeingParsed->getPosY());
             } else if (playerBeingParsed != NULL) {
-                playerBeingParsed->Displayable::setPosY(x);
+                playerBeingParsed->Displayable::setPosY(x + roomBeingParsed->getPosY());
             } else if (scrollBeingParsed != NULL) {
-                scrollBeingParsed->Displayable::setPosY(x);
+                scrollBeingParsed->Displayable::setPosY(x + roomBeingParsed->getPosY());
             } else if (swordBeingParsed != NULL) {
-                swordBeingParsed->Displayable::setPosY(x);
+                swordBeingParsed->Displayable::setPosY(x + roomBeingParsed->getPosY());
             } else if (armorBeingParsed != NULL) {
-                armorBeingParsed->Displayable::setPosY(x);
+                armorBeingParsed->Displayable::setPosY(x + roomBeingParsed->getPosY());
             }                
             bposY = false;
         } else if (bwidth) {
@@ -372,13 +385,12 @@ void DungeonXMLHandler::endElement(const XMLCh* uri, const XMLCh* localName, con
             bactioncharval = false;
         }
         if (case_insensitive_match(qNameStr, "Dungeon")) {
-            dungeonBeingparsed = NULL;
             odgBeingParsed = NULL;
         } else if (case_insensitive_match(qNameStr, "Rooms") || case_insensitive_match(qNameStr, "Passages")) {
         } else if (case_insensitive_match(qNameStr, "Room")) {
             dungeonBeingparsed->addRoom(roomBeingParsed);
             roomBeingParsed = NULL;
-        } else if (case_insensitive_match(qNameStr, "Room")) {
+        } else if (case_insensitive_match(qNameStr, "Passage")) {
             dungeonBeingparsed->addPassage(passageBeingParsed);
             passageBeingParsed = NULL;
         } else if (case_insensitive_match(qNameStr, "Monster")) {
