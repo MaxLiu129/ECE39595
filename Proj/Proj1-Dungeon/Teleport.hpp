@@ -8,13 +8,14 @@
 
 #ifndef Teleport_hpp
 #define Teleport_hpp
-
 #include <stdio.h>
 #include "CreatureAction.hpp"
 #include "Creature.hpp"
+
 class Teleport: public CreatureAction {
 public:
     Teleport(std::string _name, Creature* owner);
+    
 private:
     std::string name;
 };

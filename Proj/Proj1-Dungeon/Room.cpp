@@ -8,6 +8,17 @@ Room::Room(int _room){
 }
 
 void Room::setCreature(Creature* _monster){
-    //creatures[creatureCount++] = _monster;
-    std::cout << "set creature in room" << std::endl;
+    //creatures.push_back(_monster);
+    //std::cout << "set creature in room" << std::endl;
 }   
+
+bool Room::checkRoomPos(int _x, int _y) { // field x y.
+    if (((Displayable::getPosX() + Displayable::getWidth() - 2) < _x) || (_x < Displayable::getPosX() + 1)) {
+        return false; 
+    }
+    if (((Displayable::getPosY() + Displayable::getHeight() - 2) < _y) || (_y < Displayable::getPosY() + 1)){
+        return false; 
+    }
+
+    return true;
+}

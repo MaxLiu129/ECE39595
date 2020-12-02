@@ -14,7 +14,7 @@
 class Remove: public CreatureAction {
 public:
     Remove(std::string _name, Creature* owner);
-    
+    //remove_creature(Creature* owner, );
 private:
     std::string name;
 

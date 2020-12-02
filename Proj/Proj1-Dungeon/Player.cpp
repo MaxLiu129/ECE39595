@@ -9,12 +9,18 @@
 #include "Player.hpp"
 #include <iostream>
 
-void Player::setWeapon(Item* _sword) {
-    sword = _sword;
-    std::cout << "set sword" << std::endl;
+void Player::setWeapon(Item* _sword) { // maybe to equip weapon
+    swords.push_back(_sword);
 }
 
 void Player::setArmor(Item* _armor) {
-    armor = _armor;
-    std::cout << "set armor" << std::endl;
+    armors.push_back(_armor);
+}
+
+Item* Player::getWeapon() {
+    return swords.back();
+}
+
+Item* Player::getArmor() {
+    return armors.back();
 }

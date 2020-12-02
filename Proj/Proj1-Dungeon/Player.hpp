@@ -17,9 +17,15 @@ class Player: public Creature {
 public:
     void setWeapon(Item *sword);
     void setArmor(Item *armor);
+    Item* getWeapon();
+    Item* getArmor();
+
 private:
     Item* sword = NULL;
     Item* armor = NULL;
+    std::vector <Item*> swords;
+    std::vector <Item*> armors;
+
 };
 
 #endif /* Player_hpp */

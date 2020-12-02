@@ -15,12 +15,14 @@
 class Monster: public Creature {
 public:
     Monster();
-    void setName(std::string _name);
-    void setID(int _room, int _serial);
+    //void setName(std::string _name);
+    //void setID(int _room, int _serial);
+    //std::string getMonsterName();
+
 private:
-    std::string name;
-    int room;
-    int serial;
+    //std::string name;
+    //int room;
+    //int serial;
 };
 
 

@@ -16,5 +16,11 @@ class Item;
 class ItemAction: public Action {
 public:
     ItemAction(Item* owner);
+    void setItemActionName(std::string _actions);
+    std::string getItemActionName();
+
+private:
+    std::string action_name;
+
 };
 #endif /* ItemAction_hpp */
